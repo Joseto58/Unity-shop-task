@@ -15,6 +15,12 @@ public class PlayerController : MonoBehaviour
   PlayerControls _playerControls;
   BoxCollider2D _collider;
   Rigidbody2D _rigidbody;
+  Animator _animator;
+
+
+  //Animation
+  bool _isWalking = false;
+  Vector2 _direction;
 
   float _walkingSpeed = 3f;
 
@@ -22,6 +28,7 @@ public class PlayerController : MonoBehaviour
 
   private void Awake() {
     _playerControls = new PlayerControls();
+    _animator = GetComponent<Animator>();
 
     //_collider = GetComponent<BoxCollider2D>();
     _rigidbody = GetComponent<Rigidbody2D>();
@@ -41,20 +48,35 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+     
     }
+  
+  void HandleAnimation() {
+    if (_rigidbody.velocity != Vector2.zero) {
+      _isWalking = true;
+    } else {
+      _isWalking = false;
+    }
+  }
 
   private void OnMove(InputAction.CallbackContext context) {
     _currentMovementInput = context.ReadValue<Vector2>();
     _rigidbody.velocity = _currentMovementInput*_walkingSpeed;
+    _direction = _currentMovementInput;
+
   }
 
   private void OnInteract(InputAction.CallbackContext context) {
-    //Should now detect if player is interacting with something before activating the UI popup and changing the aactionMap
-
+    //Should now detect if player is interacting with something before activating the UI popup and changing the actionMap
+    //Check for interaction, if false, trigger a ? bubble
+    //If true, trigger interaction and give control over to the UI action map
+    if(CheckInteraction())
     SwitchActionMap(ActionMaps.UI);
   }
 
+  bool CheckInteraction() {
+    return false;
+  }
 
   private void OnEnable() {
     _playerControls.Movement.Enable();
@@ -65,8 +87,8 @@ public class PlayerController : MonoBehaviour
   }
 
 
+    //Overkill for current implementation, but cleaner than using an int or a string.
   public void SwitchActionMap(ActionMaps actionMap) {
-    //Overkill for current implementation, but
     switch (actionMap) {
       case ActionMaps.Movement:
         _playerControls.UI.Disable();
@@ -79,7 +101,6 @@ public class PlayerController : MonoBehaviour
       default:
         break;
     }
-
   }
 
 }
