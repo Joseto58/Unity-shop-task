@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
-public class MovementController : MonoBehaviour
+public enum ActionMaps
 {
+  Movement,
+  UI
+}
 
+public class PlayerController : MonoBehaviour
+{
+  
   PlayerControls _playerControls;
   BoxCollider2D _collider;
   Rigidbody2D _rigidbody;
@@ -31,7 +36,6 @@ public class MovementController : MonoBehaviour
   // Start is called before the first frame update
   void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -46,7 +50,9 @@ public class MovementController : MonoBehaviour
   }
 
   private void OnInteract(InputAction.CallbackContext context) {
-    print("Interacting");
+    //Should now detect if player is interacting with something before activating the UI popup and changing the aactionMap
+
+    SwitchActionMap(ActionMaps.UI);
   }
 
 
@@ -57,4 +63,23 @@ public class MovementController : MonoBehaviour
   private void OnDisable() {
     _playerControls.Movement.Disable();
   }
+
+
+  public void SwitchActionMap(ActionMaps actionMap) {
+    //Overkill for current implementation, but
+    switch (actionMap) {
+      case ActionMaps.Movement:
+        _playerControls.UI.Disable();
+        _playerControls.Movement.Enable();
+        break;
+      case ActionMaps.UI:
+        _playerControls.Movement.Disable();
+        _playerControls.UI.Enable();
+        break;
+      default:
+        break;
+    }
+
+  }
+
 }
