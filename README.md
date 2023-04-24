@@ -6,9 +6,9 @@ Task interview for Blue Gravity.
 Features:\
 -Character controller.\
 -Top-down tileset.\
--Interaction system, objects inside the shop are interactable.\
+-Interaction system, objects inside the shop are interactable.
 
-Still missing shop, inventory and clothing features (There is one outfit change in one of the interactions).
+Still missing the shop, inventory and clothing features (There is one outfit change in one of the interactions).
 
 
 Credits:
