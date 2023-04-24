@@ -14,5 +14,5 @@ Still missing shop, inventory and clothing features (There is one outfit change 
 Credits:
 Tileset: Tiny16: Basic by Lanea Zimmerman - https://opengameart.org/users/sharm \
 UI: Golden UI by Buch https://opengameart.org/users/buch \
-Speech Bubble: Animated emote bubbles by Romain Oltra.\
+Speech Bubble: Animated emote bubbles by Romain Oltra https://www.artstation.com/imanor \
 Font: Pixeloid - GGBOTNET - https://www.ggbot.net/fonts 
