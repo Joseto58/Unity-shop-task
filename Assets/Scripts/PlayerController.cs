@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
   BoxCollider2D _collider;
   Rigidbody2D _rigidbody;
   Animator _animator;
-
+  [SerializeField] InteractionEventSubject _interactionEventSubject;
 
   //Animation
   Vector2 _direction;
@@ -69,25 +69,29 @@ public class PlayerController : MonoBehaviour
 
   }
 
-  private void OnInteract(InputAction.CallbackContext context) {
-    //Should now detect if player is interacting with something before activating the UI popup and changing the actionMap
     //Check for interaction, if false, trigger a ? bubble
     //If true, trigger interaction and give control over to the UI action map
-    if (CheckInteraction()) {
+  private void OnInteract(InputAction.CallbackContext context) {
+    RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, GetPlayerSpriteDirection(), 1f, _interactionLayer);
+    if (raycastHit) {
+      InvokeInteraction(raycastHit);
       //SwitchActionMap(ActionMaps.UI);
-      print("Interacting!");
     } else {
       PlayThoughtBubble();
     }
   }
 
-  void PlayThoughtBubble() {
-    _thoughtAnimation.Play();
+
+  void InvokeInteraction(RaycastHit2D raycastHit) {
+    string colliderName = raycastHit.collider.name;
+    print(colliderName.Substring(0, colliderName.Length-12));
+    Interactions.TryParse(colliderName.Substring(0, colliderName.Length-12), out Interactions interaction);
+    print(interaction);
+    _interactionEventSubject.Interaction?.Invoke(interaction);
   }
 
-  bool CheckInteraction() {
-    Debug.DrawLine(transform.position, (Vector2)transform.position+GetPlayerSpriteDirection(), Color.red, 1f);
-    return (Physics2D.Raycast(transform.position, GetPlayerSpriteDirection(), 1f,_interactionLayer));
+  void PlayThoughtBubble() {
+    _thoughtAnimation.Play();
   }
 
   //With this approach we can get which direction the sprite itself is facing, independent of how the rigidbody is behaving.
