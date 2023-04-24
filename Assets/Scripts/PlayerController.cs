@@ -48,15 +48,19 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-     
+    HandleAnimation();
     }
   
   void HandleAnimation() {
-    if (_rigidbody.velocity != Vector2.zero) {
+/*
+    if (_direction != Vector2.zero) {
       _isWalking = true;
     } else {
       _isWalking = false;
     }
+  */
+    _animator.SetInteger("directionX", (int)(_direction.x*2f));
+    _animator.SetInteger("directionY", (int)(_direction.y*2f));
   }
 
   private void OnMove(InputAction.CallbackContext context) {
