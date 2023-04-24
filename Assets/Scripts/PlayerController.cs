@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
   Rigidbody2D _rigidbody;
   Animator _animator;
   [SerializeField] InteractionEventSubject _interactionEventSubject;
+  //Temporary chest interaction outfit change, will remove once shop is implemented.
+  [SerializeField] RuntimeAnimatorController _chestOutfitController;
+
 
   //Animation
   Vector2 _direction;
@@ -75,7 +78,7 @@ public class PlayerController : MonoBehaviour
     RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, GetPlayerSpriteDirection(), 1f, _interactionLayer);
     if (raycastHit) {
       InvokeInteraction(raycastHit);
-      //SwitchActionMap(ActionMaps.UI);
+      SwitchActionMap(ActionMaps.UI);
     } else {
       PlayThoughtBubble();
     }
@@ -115,7 +118,7 @@ public class PlayerController : MonoBehaviour
   }
 
     //Overkill for current implementation, but cleaner than using an int or a string.
-  public void SwitchActionMap(ActionMaps actionMap) {
+  public void SwitchActionMap(ActionMaps actionMap = ActionMaps.Movement) {
     switch (actionMap) {
       case ActionMaps.Movement:
         _playerControls.UI.Disable();
@@ -131,6 +134,10 @@ public class PlayerController : MonoBehaviour
     }
   }
 
+  //Placeholder chest interaction since I have not implementedd the chest feature.
+  public void ChangeOutfit() {
+    _animator.runtimeAnimatorController = _chestOutfitController;
+  }
 
   private void OnEnable() {
     _playerControls.Movement.Enable();

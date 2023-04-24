@@ -17,5 +17,6 @@ public enum Interactions
   Shop,
   Pot,
   Chest,
-  Door
+  Door,
+  ClosedChest
 }
