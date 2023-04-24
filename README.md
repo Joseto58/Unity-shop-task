@@ -3,6 +3,10 @@
 
 Task interview for Blue Gravity. 
 
+Controls:\
+Movement - WASD\
+Interact - Spacebar
+
 Features:\
 -Character controller.\
 -Top-down tileset.\
